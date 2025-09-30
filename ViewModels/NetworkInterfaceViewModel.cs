@@ -89,8 +89,8 @@ namespace IPTracker.ViewModels
             PropertyRows.Add(new PropertyRow { Label = "ID карты в системе:", Value = PrimaryModel.AdapterId });
             PropertyRows.Add(new PropertyRow { Label = "Общее количество полученных одноадресных пакетов:", Value = PrimaryModel.TotalPacketsReceived.ToString() });
             PropertyRows.Add(new PropertyRow { Label = "Общее количество отправленных одноадресных пакетов:", Value = PrimaryModel.TotalPacketsSent.ToString() });
-            PropertyRows.Add(new PropertyRow { Label = "Получено за секунду - ", Value = PrimaryModel.ReceivedPerSecond.ToString() });
-            PropertyRows.Add(new PropertyRow { Label = "Отправлено за секунду - ", Value = PrimaryModel.SentPerSecond.ToString() });
+            PropertyRows.Add(new PropertyRow { Label = "Получено в данный момент - ", Value = PrimaryModel.ReceivedPerSecond.ToString() });
+            PropertyRows.Add(new PropertyRow { Label = "Отправлено в данный момент - ", Value = PrimaryModel.SentPerSecond.ToString() });
             #endregion
         }
 

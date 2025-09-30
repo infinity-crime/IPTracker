@@ -14,7 +14,6 @@ namespace IPTracker.Services
         private IPInterfaceStatistics _lastStatistic;
 
         private readonly TimeSpan _interval;
-        private DateTime _lastTime;
 
         private CancellationTokenSource? _tokenSource = null;
         private Task? _loop = null;
@@ -31,10 +30,9 @@ namespace IPTracker.Services
         public void SetNetworkInterface(NetworkInterface networkInterface)
         {
             _networkInterface = networkInterface;
-            if(_networkInterface is not null)
+            if (_networkInterface is not null)
             {
                 _lastStatistic = _networkInterface.GetIPStatistics();
-                _lastTime = DateTime.UtcNow;
             }
         }
 
@@ -57,27 +55,25 @@ namespace IPTracker.Services
                     try
                     {
                         var currentStats = _networkInterface.GetIPStatistics();
-                        var now = DateTime.UtcNow;
-                        var seconds = (now - _lastTime).TotalSeconds;
 
-                        if (seconds <= 0) seconds = 1;
+                        long packetsReceived = currentStats.UnicastPacketsReceived;
+                        long packetsSent = currentStats.UnicastPacketsSent;
 
-                        var deltaRec = currentStats.UnicastPacketsReceived - _lastStatistic.UnicastPacketsReceived;
-                        var deltaSent = currentStats.UnicastPacketsSent - _lastStatistic.UnicastPacketsSent;
+                        var deltaRec = packetsReceived - _lastStatistic.UnicastPacketsReceived;
+                        var deltaSent = packetsSent - _lastStatistic.UnicastPacketsSent;
 
-                        if (deltaRec <= 0) deltaRec = currentStats.UnicastPacketsReceived;
-                        if(deltaSent <= 0) deltaSent = currentStats.UnicastPacketsSent;
+                        if (deltaRec <= 0) deltaRec = 0;
+                        if(deltaSent <= 0) deltaSent = 0;
 
                         var dto = new NetworkStatsDto
                         {
-                            TotalPacketsReceived = currentStats.UnicastPacketsReceived,
+                            TotalPacketsReceived = packetsReceived,
                             TotalPacketsSent = currentStats.UnicastPacketsSent,
-                            ReceivedPerSecond = deltaRec / seconds,
-                            SentPerSecond = deltaSent / seconds
+                            ReceivedPerSecond = deltaRec,
+                            SentPerSecond = deltaSent
                         };
 
                         _lastStatistic = currentStats;
-                        _lastTime = now;
 
                         NetworkStatsUpdated?.Invoke(this, dto);
                     }

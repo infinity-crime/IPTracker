@@ -11,8 +11,8 @@ namespace IPTracker.Services
     {
         public long TotalPacketsReceived { get; set; }
         public long TotalPacketsSent { get; set; }
-        public double ReceivedPerSecond { get; set; } = 0;
-        public double SentPerSecond { get; set; } = 0;
+        public long ReceivedPerSecond { get; set; } = 0;
+        public long SentPerSecond { get; set; } = 0;
     }
     public interface INetworkStatisticService : IDisposable
     {

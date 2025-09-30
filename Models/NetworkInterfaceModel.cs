@@ -22,7 +22,7 @@ namespace IPTracker.Models
 
         public long TotalPacketsReceived { get; set; }
         public long TotalPacketsSent { get; set; }
-        public double ReceivedPerSecond { get; set; }
-        public double SentPerSecond { get; set; }
+        public long ReceivedPerSecond { get; set; }
+        public long SentPerSecond { get; set; }
     }
 }

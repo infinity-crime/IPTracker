@@ -1,0 +1,22 @@
+﻿<Window x:Class="IPTracker.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IPTracker.Views"
+        xmlns:views="clr-namespace:IPTracker.Views.Controls"
+        mc:Ignorable="d"
+        Background="WhiteSmoke"
+        Style="{StaticResource MaterialDesignWindow}"
+        Title="IPTracker" Height="450" Width="800"
+        ResizeMode="NoResize">
+
+    <TabControl>
+        <TabItem Header="Анализ сетевой карты (Wi-fi модуль)">
+            <views:NetworkInterfaceInfoView />
+        </TabItem>
+        <TabItem Header="Анализ сети">
+            <!-- soon -->
+        </TabItem>
+    </TabControl>
+</Window>

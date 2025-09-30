@@ -24,7 +24,7 @@ namespace IPTracker.Services
             }
         }
 
-        public NetworkInterfaceModel? GetPrimaryNetworkInterface()
+        public NetworkInterfaceModel? GetPrimaryNetworkInterfaceDto()
         {
             var adapter = NetworkInterface.GetAllNetworkInterfaces()
                 .FirstOrDefault(a => a.OperationalStatus == OperationalStatus.Up
@@ -34,6 +34,15 @@ namespace IPTracker.Services
                 return MapToModel(adapter);
 
             return null;
+        }
+
+        public NetworkInterface? GetPrimaryNetworkInterface()
+        {
+            var adapter = NetworkInterface.GetAllNetworkInterfaces()
+                .FirstOrDefault(a => a.OperationalStatus == OperationalStatus.Up
+                && a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211);
+
+            return adapter ?? null;
         }
 
         private NetworkInterfaceModel MapToModel(NetworkInterface ni)

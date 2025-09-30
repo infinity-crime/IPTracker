@@ -19,5 +19,10 @@ namespace IPTracker.Models
         public long SpeedBitsPerSecond { get; init; } // Nominal speed
 
         public bool SupportsMulticast { get; init; }
+
+        public long TotalPacketsReceived { get; set; }
+        public long TotalPacketsSent { get; set; }
+        public double ReceivedPerSecond { get; set; }
+        public double SentPerSecond { get; set; }
     }
 }

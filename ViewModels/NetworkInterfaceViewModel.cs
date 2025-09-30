@@ -11,13 +11,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace IPTracker.ViewModels
 {
     public class NetworkInterfaceViewModel : INotifyPropertyChanged
     {
         private readonly INetworkInterfaceService _networkService;
+        private readonly INetworkStatisticService _networkStatisticService;
+
         private NetworkInterfaceModel? _primaryInterface;
+
+        private readonly Dispatcher _dispatcher = Application.Current.Dispatcher;
 
         public NetworkInterfaceModel? PrimaryModel
         {
@@ -33,9 +38,15 @@ namespace IPTracker.ViewModels
 
         public ObservableCollection<PropertyRow> PropertyRows { get; } = new();
 
-        public NetworkInterfaceViewModel(INetworkInterfaceService networkInterfaceService)
+        public ICommand RefreshCommand { get; }
+
+        public NetworkInterfaceViewModel(INetworkInterfaceService networkInterfaceService, 
+            INetworkStatisticService networkStatisticService)
         {
             _networkService = networkInterfaceService;
+            _networkStatisticService = networkStatisticService;
+
+            _networkStatisticService.NetworkStatsUpdated += OnStatsUpdated;
 
             LoadPrimaryInterface();
 
@@ -44,14 +55,16 @@ namespace IPTracker.ViewModels
             BuildRows();
         }
 
-        public ICommand RefreshCommand { get; }
-
         private void LoadPrimaryInterface()
         {
-            PrimaryModel = _networkService.GetPrimaryNetworkInterface();
+            PrimaryModel = _networkService.GetPrimaryNetworkInterfaceDto();
             if (PrimaryModel is null)
                 MessageBox.Show("Произошла ошибка получения данных сетевого адаптера Wi-Fi", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
+
+            _networkStatisticService.SetNetworkInterface(_networkService.GetPrimaryNetworkInterface());
+
+            BuildRows();
         }
 
         private void RefreshNetworkInterface()
@@ -74,7 +87,26 @@ namespace IPTracker.ViewModels
             PropertyRows.Add(new PropertyRow { Label = "Номинальная скорость:", Value = $"{PrimaryModel.SpeedBitsPerSecond} мбит/с" });
             PropertyRows.Add(new PropertyRow { Label = "Multicast:", Value = PrimaryModel.SupportsMulticast.ToString() });
             PropertyRows.Add(new PropertyRow { Label = "ID карты в системе:", Value = PrimaryModel.AdapterId });
+            PropertyRows.Add(new PropertyRow { Label = "Общее количество полученных одноадресных пакетов:", Value = PrimaryModel.TotalPacketsReceived.ToString() });
+            PropertyRows.Add(new PropertyRow { Label = "Общее количество отправленных одноадресных пакетов:", Value = PrimaryModel.TotalPacketsSent.ToString() });
+            PropertyRows.Add(new PropertyRow { Label = "Получено за секунду - ", Value = PrimaryModel.ReceivedPerSecond.ToString() });
+            PropertyRows.Add(new PropertyRow { Label = "Отправлено за секунду - ", Value = PrimaryModel.SentPerSecond.ToString() });
             #endregion
+        }
+
+        private void OnStatsUpdated(object sender, NetworkStatsDto dto)
+        {
+            _dispatcher.BeginInvoke(new Action(() => 
+            {
+                PrimaryModel.TotalPacketsReceived = dto.TotalPacketsReceived;
+                PrimaryModel.TotalPacketsSent = dto.TotalPacketsSent;
+                PrimaryModel.ReceivedPerSecond = dto.ReceivedPerSecond;
+                PrimaryModel.SentPerSecond = dto.SentPerSecond;
+
+                BuildRows();
+
+                OnPropertyChanged(nameof(PrimaryModel));
+            }));
         }
 
 
@@ -82,6 +114,11 @@ namespace IPTracker.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Dispose()
+        {
+            _networkStatisticService.NetworkStatsUpdated -= OnStatsUpdated;
         }
     }
 

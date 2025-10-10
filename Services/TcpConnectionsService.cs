@@ -29,8 +29,12 @@ namespace IPTracker.Services
             {
                 tcpConnectionModels.Add(new TcpConnectionModel
                 {
-                    LocalEndPoint = tcpConnection.LocalEndPoint,
-                    RemoteEndPoint = tcpConnection.RemoteEndPoint,
+                    LocalAddress = tcpConnection.LocalEndPoint.Address,
+                    LocalPort = tcpConnection.LocalEndPoint.Port,
+
+                    RemoteAddress = tcpConnection.RemoteEndPoint.Address,
+                    RemotePort = tcpConnection.RemoteEndPoint.Port,
+
                     StateTcpConnection = tcpConnection.State
                 });
             }

@@ -10,8 +10,10 @@ namespace IPTracker.Models
 {
     public class TcpConnectionModel
     {
-        public IPEndPoint? LocalEndPoint { get; init; }
-        public IPEndPoint? RemoteEndPoint { get; init; }
+        public IPAddress? LocalAddress { get; init; }
+        public int LocalPort { get; init; }
+        public IPAddress? RemoteAddress { get; init; }
+        public int RemotePort { get; init; }
         public TcpState StateTcpConnection { get; init; }
     }
 }

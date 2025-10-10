@@ -14,21 +14,23 @@
     </DataTemplate>
 
     <DataTemplate x:Key="PropertyTcpRowTemplate">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Border BorderBrush="LightSeaGreen" BorderThickness="0,0,0,1" Padding="8" Margin="0,0,0,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Style="{StaticResource LabelTextStyle}" Text="{Binding LocalAddress, StringFormat='Локальный адрес: {0}'}"/>
-            <TextBlock Grid.Row="1" Style="{StaticResource ValueTextStyle}" Text="{Binding LocalPort, StringFormat='Порт (local): {0}'}"/>
-            <TextBlock Grid.Row="2" Style="{StaticResource LabelTextStyle}" Text="{Binding RemoteAddress, StringFormat='Удаленный адрес: {0}'}"/>
-            <TextBlock Grid.Row="3" Style="{StaticResource ValueTextStyle}" Text="{Binding RemotePort, StringFormat='Порт (remote): {0}'}"/>
-            <TextBlock Grid.Row="4" Style="{StaticResource ValueTextStyle}" Text="{Binding StateTcpConnection, StringFormat='Состояние соединения: {0}'}"/>
-        </Grid>
+                <TextBlock Grid.Row="0" Style="{StaticResource LabelTextStyle}" Text="{Binding LocalAddress, StringFormat='Локальный адрес: {0}'}"/>
+                <TextBlock Grid.Row="1" Style="{StaticResource ValueTextStyle}" Text="{Binding LocalPort, StringFormat='Порт (local): {0}'}"/>
+                <TextBlock Grid.Row="2" Style="{StaticResource LabelTextStyle}" Text="{Binding RemoteAddress, StringFormat='Удаленный адрес: {0}'}"/>
+                <TextBlock Grid.Row="3" Style="{StaticResource ValueTextStyle}" Text="{Binding RemotePort, StringFormat='Порт (remote): {0}'}"/>
+                <TextBlock Grid.Row="4" Style="{StaticResource ValueTextStyle}" Text="{Binding StateTcpConnection, StringFormat='Состояние соединения: {0}'}"/>
+            </Grid>
+        </Border>
     </DataTemplate>
 
 </ResourceDictionary>

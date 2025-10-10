@@ -1,20 +1,35 @@
-﻿using System;
+﻿using IPTracker.Models;
+using IPTracker.Services;
+using MVVM_Example.ViewModel.Commands;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using IPTracker.Models;
-using IPTracker.Services;
-using MVVM_Example.ViewModel.Commands;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace IPTracker.ViewModels
 {
-    public class TcpConnectionsViewModel
+    public class TcpConnectionsViewModel : BaseViewModel
     {
         private readonly ITcpConnectionsService _tcpConnectionsService;
+
+        private int _countTcpConnections = 0;
+        public int CountTcpConnections
+        {
+            get => _countTcpConnections;
+            set
+            {
+                if (_countTcpConnections == value)
+                    return;
+
+                _countTcpConnections = value;
+                OnPropertyChanged();
+            }
+        }
 
         public TcpConnectionsViewModel(ITcpConnectionsService tcpConnectionsService)
         {
@@ -34,6 +49,8 @@ namespace IPTracker.ViewModels
             var snapshot = _tcpConnectionsService.GetSnapshotTcpConnections();
             foreach (var connection in snapshot)
                 TcpConnectionsCollection.Add(connection);
+
+            CountTcpConnections = snapshot.Count;
         }
 
         private void UpdateConnections()

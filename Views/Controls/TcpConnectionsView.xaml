@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" 
-               Text="Информация об активных сетевых TCP соединениях" 
+               Text="{Binding CountTcpConnections, StringFormat='Информация об активных TCP соединениях (кол-во: {0})'}" 
                Style="{StaticResource SectionHeaderStyle}"/>
 
         <ScrollViewer Grid.Row="1" 

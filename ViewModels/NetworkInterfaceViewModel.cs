@@ -15,7 +15,7 @@ using System.Windows.Threading;
 
 namespace IPTracker.ViewModels
 {
-    public class NetworkInterfaceViewModel : INotifyPropertyChanged
+    public class NetworkInterfaceViewModel : BaseViewModel
     {
         private readonly INetworkInterfaceService _networkService;
         private readonly INetworkStatisticService _networkStatisticService;
@@ -107,13 +107,6 @@ namespace IPTracker.ViewModels
 
                 OnPropertyChanged(nameof(PrimaryModel));
             }));
-        }
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void Dispose()

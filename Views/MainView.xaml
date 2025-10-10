@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:IPTracker.Views"
         xmlns:views="clr-namespace:IPTracker.Views.Controls"
         mc:Ignorable="d"
-        Background="WhiteSmoke"
         Style="{StaticResource MaterialDesignWindow}"
         Title="IPTracker" Height="450" Width="800"
+        Background="White"
         ResizeMode="NoResize">
 
     <TabControl>

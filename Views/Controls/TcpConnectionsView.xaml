@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/background_v2.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

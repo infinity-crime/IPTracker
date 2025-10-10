@@ -2,15 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DataTemplate x:Key="PropertyRowTemplate">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Border BorderBrush="LightSeaGreen" BorderThickness="0,0,0,1" Padding="8" Margin="0,0,0,4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Style="{StaticResource LabelTextStyle}" Text="{Binding Label}"/>
-            <TextBlock Grid.Column="1" Style="{StaticResource ValueTextStyle}" Text="{Binding Value}"/>
-        </Grid>
+                <TextBlock Grid.Column="0" Style="{StaticResource LabelTextStyle}" Text="{Binding Label}"/>
+                <TextBlock Grid.Column="1" Style="{StaticResource ValueTextStyle}" Text="{Binding Value}"/>
+            </Grid>
+        </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="PropertyTcpRowTemplate">

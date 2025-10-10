@@ -13,10 +13,10 @@
 
     <TabControl>
         <TabItem Header="Анализ сетевой карты (Wi-fi модуль)">
-            <views:NetworkInterfaceInfoView />
+            <views:NetworkInterfaceInfoView DataContext="{Binding NetworkInterfaceViewModel}"/>
         </TabItem>
         <TabItem Header="Анализ сети">
-            <!-- soon -->
+            <views:TcpConnectionsView DataContext="{Binding TcpConnectionsViewModel}"/>
         </TabItem>
     </TabControl>
 </Window>

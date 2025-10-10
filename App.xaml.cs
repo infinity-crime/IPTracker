@@ -20,19 +20,35 @@ namespace IPTracker
 
             var services = new ServiceCollection();
 
+            #region RegisterServices
             services.AddSingleton<INetworkInterfaceService, NetworkInterfaceService>();
             services.AddSingleton<INetworkStatisticService, NetworkStatisticService>(sp => new NetworkStatisticService(TimeSpan.FromSeconds(1)));
+            services.AddSingleton<ITcpConnectionsService, TcpConnectionsService>();
+            #endregion
 
+            #region RegisterViewModels
             services.AddSingleton<NetworkInterfaceViewModel>(sp =>
             {
                 var s1 = sp.GetRequiredService<INetworkInterfaceService>();
                 var s2 = sp.GetRequiredService<INetworkStatisticService>();
                 return new NetworkInterfaceViewModel(s1, s2);
             });
+            services.AddSingleton<TcpConnectionsViewModel>(sp =>
+            {
+                var s1 = sp.GetRequiredService<ITcpConnectionsService>();
+                return new TcpConnectionsViewModel(s1);
+            });
+            services.AddSingleton<MainViewModel>(sp =>
+            {
+                var vm1 = sp.GetRequiredService<NetworkInterfaceViewModel>();
+                var vm2 = sp.GetRequiredService<TcpConnectionsViewModel>();
+                return new MainViewModel(vm1, vm2);
+            });
+            #endregion
 
             services.AddSingleton<MainView>(sp =>
             {
-                var vm = sp.GetRequiredService<NetworkInterfaceViewModel>();
+                var vm = sp.GetRequiredService<MainViewModel>();
                 return new MainView { DataContext = vm };
             });
 

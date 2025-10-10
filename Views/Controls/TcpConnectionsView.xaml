@@ -19,8 +19,8 @@
 
         <ScrollViewer Grid.Row="1" 
                   VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding PropertyRows}" 
-                      ItemTemplate="{StaticResource PropertyRowTemplate}"/>
+            <ItemsControl ItemsSource="{Binding TcpConnectionsCollection}" 
+                      ItemTemplate="{StaticResource PropertyTcpRowTemplate}"/>
         </ScrollViewer>
 
         <Border Grid.Row="2" 
